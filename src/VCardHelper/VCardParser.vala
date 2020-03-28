@@ -27,8 +27,8 @@ namespace VCardHelper {
 
     public delegate void ContactActions (Contact contact);
 
-    public async void parse (string path, out Error? icon_error, ContactActions actions) throws Error, IOError {
-        icon_error = null;
+    public async Error? parse (string path, ContactActions actions) throws Error, IOError {
+        Error? icon_error = null;
 
         var loop = new MainLoop ();
 
@@ -56,6 +56,8 @@ namespace VCardHelper {
 
             actions (contact);
         }
+
+        return icon_error;
     }
 
     private DataHelper.Type parse_type (string line) {
